@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>构造函数继承</title>
+</head>
+
+<body>
+    <script>
+        
+        //使用父类的构造函数来增强子类实例，等同于复制父类的实例给子类（不使用原型）
+        function parent() {
+            this.name = '小明';
+        }
+        function child() {
+            parent.call(this); //1.构造函数继承
+            this.sex = 'male'
+        }
+        var test2 = new child() //2.构造函数继承
+
+
+        //构造函数继承的测试
+        console.log('test2 instanceof child: ', test2 instanceof child); //true
+        console.log('test2 instanceof parent: ', test2 instanceof parent); //false 
+        /*
+         说明原型链断了，test2的原型链上不包括parent，
+         也不能说断了，只是test2的原型的构造函数foo2调用了另一个原型的构造函数，也就是parent，帮他赋值创建了一些东西，
+         call那行代码与直接把parent里面的代码复制粘贴到child里面一样
+         差不多是
+        神秘的原型   神秘的原型
+           |            |
+           |            |
+         parent       child
+                        |
+                        |
+                      test2
+         */
+
+        console.log('test2.__proto__ === child.prototype: ', test2.__proto__ === child.prototype); //true
+
+
+        console.log('child.prototype.constructor: ', child.prototype.constructor); //child 
+        console.log('test2.__proto__.constructor: ', test2.__proto__.constructor); //child 
+        console.log(' test2.__proto__.constructor === parent: ', test2.__proto__.constructor === parent); //false
+
+        console.log('test2.__proto__: ', test2.__proto__)//{constructor: ƒ}
+
+        /*
+        构造函数继承的实质是改变了**改变this的指向**，
+        parent的实例 --> 改为指向child的实例。导致 parent的实例的属性挂在到了child的实例上，这就实现了继承。
+        */
+        // 因为构造函数继承的实质，导致了使用构造函数继承，某一个实例修改变量时，其他原型的实例并不会被污染的结果
+        // 但因为他是子函数（或者子类）的实例，父类里用点加入了新方法，这个他是不能更新继承到的
+        // 例子
+        parent.age = 13 // 如果你以为这样写，原型就加入新属性了是不对的，因为函数也是一个对象，在这个函数的原型链上也算是一个独立的个体，这个给函数加了东西不能给原型加上新属性，确定吗？看下面代码证明一下
+        var test_parent = new parent()
+        console.log('test_parent: ', test_parent.age); //undefined 验证了上面的说法，parent在他自个的原型链上是一个独立的个体
+        
+        parent.prototype.age = 13 // 给原型加上
+        var test_parent_2 = new parent()
+        console.log('test_parent: ', test_parent.age) // 13
+        console.log('test_parent_2: ', test_parent_2); // age 在原型里
+        console.log('test_parent_2.age: ', test_parent_2.age); // 13
+
+        console.log('test2.age: ', test2.age); //undefined 为什么这里没有报引用类型错误,可能是对象的原因吧 看下面的代码
+        var obj = { age:13}
+        console.log('obj.sex: ', obj.sex);// undefined 确实 是对象的原因
+
+        child.prototype.age = 15
+        console.log('test2.age: ', test2.age);//15
+</script>
+</body>
+
+</html>

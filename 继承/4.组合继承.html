@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组合继承</title>
+</head>
+<body>
+    <script>
+    /*
+        组合方式实现继承：构造函数、原型链
+        类的首字母大写
+    */
+    function Parent() {
+        this.name = 'Parent 的属性';
+        this.arr = [1, 2, 3];
+    }
+
+    function Child() {
+        Parent.call(this); //【重要1】执行 parent方法
+        this.type = 'Child 的属性';
+    }
+    Child.prototype = new Parent(); //【重要2】第二次执行parent方法
+
+    console.log('child和parent的原型是否相同',Child.prototype===Parent.prototype); //false
+    console.log('child的原型',Child.prototype.constructor); //parent
+    console.log('parent的原型',Parent.prototype); //Object
+
+    var child1= new Child();
+    var child2 = new Child();
+    
+    //他是child的实例，原型指向parent的实例
+    //（不算是原型对象吧？，对，不算是原型对象，没有constructor，上面为什么会输出因为往上找了？），也不对，暂时忽略
+    // 而parent的原型就是Object，原型的构造函数是parent，
+    // 改变child的原型会引起他们的改变，改变parent的原型也会引起他们的改变
+    // 还有一个问题，为什么下面的加入原型属性会先引起上面的原型变化啊？？？？ 事实证明对我们的代码编写并没有影响
+    /*
+     Object
+       |
+       |
+     Parent
+       |
+       |
+     Child
+       |
+       |
+ child1、child2
+    */
+    console.log('child1: ', child1);
+    console.log('child2: ', child2);
+
+    console.log(' ');
+    Child.prototype.sex = 'male'
+    console.log('更改Child的原型');
+    console.log('child1.sex: ', child1.sex);// male
+    console.log('child2.sex: ', child2.sex);// male
+
+    console.log(' ');
+    Parent.prototype.love = 'female';
+    console.log('更改Parent的原型');
+    console.log('child1.love: ', child1.love); // female
+    console.log('child2.love: ', child2.love); // female
+
+    console.log(' ');
+    console.log('-----------------------------------');
+    console.log(' ');
+
+    console.log('基本数据类型污染测试');
+    child1.name = 'child1'
+    console.log('child1.name: ', child1.name);// child1
+    console.log('child2.name: ', child2.name);// 'Parent 的属性'
+
+    console.log('查看原型的变化'); // 无变化
+    console.log('child1.__proto__: ', child1.__proto__.name);// 'Parent 的属性'
+    console.log('child2.__proto__: ', child2.__proto__.name);// 'Parent 的属性'
+    
+    console.log(' ');
+
+    console.log('引用数据类型污染测试'); // 无变化
+    child1.arr.push(4)
+    console.log('child1.arr: ', child1.arr);// 1,2,3,4
+    console.log('child2.arr: ', child2.arr);// 1,2,3
+
+    console.log('查看原型的变化'); // 无变化
+    console.log('child1.__proto__: ', child1.__proto__.arr);// 1,2,3
+    console.log('child2.__proto__: ', child2.__proto__.arr);// 1,2,3
+    </script>
+</body>
+</html>

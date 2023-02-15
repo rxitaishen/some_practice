@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型式继承</title>
+</head>
+<body>
+    <script>
+        /*
+        原理等同ES5的Object.create()方法，
+        创建一个函数，使这个函数成为括号中obj的构造函数，也就是这个函数的原型指向这个obj
+        然后返回这个构造函数的实例，是一个浅拷贝，新实例的引用数据类型改变会让原来的obj改变
+        */
+
+        //原型链继承好像都会提升添加属性的代码。并不是这样的，可能只是f12的错误！！是个欺骗
+
+
+        obj_c = {
+            name:'小李',
+            sex:'male',
+            love:'female',
+            family:['li','ming','hon']
+        }
+        var a = Object.create(obj_c) 
+        console.log(a.__proto__); // 下面加的属性a的原型这里就有了 wc 并没哟
+        for(var key of a.__proto__.family){
+            console.log(key)
+            if(key==='Rob'){
+                console.log('OMG，Rob Is Here！！'); // 不会输出的
+            }
+        }
+        a.family.push("Rob");
+        console.log('obj_c.family: ', obj_c.family);// 'li','ming','hon','Rob'
+
+        //原型式继承
+        function Custom(obj_c)
+        {
+            function F(){};
+            F.prototype = obj_c;
+            return new F();
+        }
+        
+        var man = Custom(obj_c);
+        console.log(man.name);
+        console.log('man.__proto__===obj_c',man.__proto__===obj_c);//true
+
+        console.log('man.__proto__.constructor',man.__proto__.constructor);//构造函数是Object()
+
+    </script>
+</body>
+</html>

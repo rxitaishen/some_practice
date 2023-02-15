@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.寄生组合式继承</title>
+</head>
+
+<body>
+    <script>
+        function Father(name) {
+            this.name = name;
+            this.colors = ["red", "blue", "green"];
+        }
+        Father.prototype.sayLove = function () {
+            console.log('love');
+        }
+        function Child(name, sex) {
+            Father.call(this, name);
+            this.sayhi = function () {
+                console.log('hi');
+            }
+        }
+        function inherit(subType, superType) {
+            let origin = Object.create(superType.prototype);
+            origin.constructor = subType;
+            subType.prototype = origin;
+        }
+        inherit(Child, Father)
+
+        var instance1 = new Child("xyc", 'male');
+        var instance2 = new Child("lxy", 'female');
+
+        instance1.colors.push("2"); // ["red", "blue", "green", "2"]
+        instance2.colors.push("3"); // ["red", "blue", "green", "3"]
+
+        console.log(instance1.colors);
+        console.log(instance2.colors);
+
+        console.log(Father.prototype.colors);//undefined，colors不是原型属性，是实例属性
+    </script>
+</body>
+
+</html>

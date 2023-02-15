@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Foo() {
+            //imply global暗示全局变量，任何变量，如果变量未经声明就赋值，这些变量就为全局对象所有。一切声明的全局变量和未经声明的变量，全归window所有。
+            // 这里的b是未经声明的变量，所以是归window所有的。
+            getName = function () {
+                console.log(1);
+            }
+            
+        }
+        Foo()
+        getName() //1
+/*--------------------------*/
+        function Foo() {  //两个函数代码一起执行的时候Foo会更新成这个
+            var getName = function () {
+                console.log(1);
+            }
+            
+        }
+        Foo()
+        getName() //有了函数作用域 referenceerr
+
+       var getName2 = 2
+        console.log(window.getName2);
+    </script>
+</body>
+
+</html>

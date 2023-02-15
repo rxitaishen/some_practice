@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型链继承</title>
+</head>
+
+<body>
+    <script>
+        function foo1() {
+            this.name = '小明';
+        }
+        function foo3() {
+            this.size = 'max'
+        }
+        
+        foo3.prototype = new foo1(); //1.原型链继承
+        
+        var test3 = new foo3()//2.原型链继承
+
+        //原型链继承的测试
+        console.log('test3 instanceof foo3: ', test3 instanceof foo3); //true
+        console.log('test3.__proto__ === foo3.prototype: ', test3.__proto__ === foo3.prototype); //true
+
+        //???
+        console.log('foo3.prototype.constructor: ', foo3.prototype.constructor); //foo1 而不是 foo3? 因为foo3也是foo1的实例？
+        console.log('test3.__proto__.constructor: ', test3.__proto__.constructor); //foo1 而不是 foo3?因为foo3也是foo1的实例？
+
+        console.log('test3.__proto__: ', test3.__proto__)//foo1
+        /*
+        看来这就造成了原型链继承的缺点 ， 任何一个实例修改与‘原型内属性同名’的属性 会造成其他变量也被污染了
+        （那也分情况，如果属性是基本数据类型就不会污染，引用数据类型会污染）
+        */
+        console.log(' ');
+        console.log('-----------------------------------');
+        console.log(' ');
+        //污染测试
+        var test3_re_foo1 = new foo1()
+        var test3_re_foo3 = new foo3()
+        console.log('---------污染前----------');
+        console.log('test3.name: ', test3.name); //小明
+        console.log('test3_re_foo1.name: ', test3_re_foo1.name);//小明
+        console.log('test3_re_foo3.name: ', test3_re_foo3.name);//小明
+
+        test3.name = '小红'
+
+        console.log('---------污染后----------');
+        console.log('test3.name change: ', test3.name);//小红
+        console.log('test3_re_foo1.name change: ', test3_re_foo1.name);//小明
+        console.log('test3_re_foo3.name: ', test3_re_foo3.name);//小明
+        console.log(test3_re_foo3.__proto__);//因为基本数据类型，原型没变
+
+        
+    </script>
+</body>
+
+</html>

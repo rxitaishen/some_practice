@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>memory leak</title>
+</head>
+<body>
+  <div id="first">
+    <div id="second">
+      <button id="button">冒泡</button>
+    </div>
+  </div>
+  <!-- 上面的例子即使是有iframe的话，也是不影响的，
+    比如，我们把这个页面嵌入到另外一个页面中， 最终也是会冒泡到这个页面的window，
+    即使是在iframe上添加一个click事件，也是不会冒泡到这个iframe上的，即事件的冒泡是相互独立的。 
+  -->
+  <iframe src="https://www.cnblogs.com/zhuzhenwei918/p/6139880.html" height="200px" width="50%" frameborder="0"></iframe>
+  <script>
+    var button = document.getElementById('button'),
+        second = document.getElementById('second'),
+        first = document.getElementById('first'),
+        body = document.body,
+        html = document.documentElement;
+    button.addEventListener('click', function () {
+      alert('button');
+    });
+    second.addEventListener('click', function () {
+      alert('second');
+    });
+    first.addEventListener('click', function () {
+      alert('first');
+      //阻止事件冒泡
+      event.stopPropagation();  
+    });
+    body.addEventListener('click', function () {
+      alert('body');
+    });
+    html.addEventListener('click', function () {
+      alert('html');
+    });
+    window.addEventListener('click', function () {
+      alert('window');
+    });
+    iframe.addEventListener('click',function(){
+      alert("iframe");
+    })
+  </script>
+</body>
+</html>

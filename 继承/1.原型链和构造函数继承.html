@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型链和构造函数继承</title>
+</head>
+
+<body>
+    <script>
+        function foo1() {
+            this.name = '小明';
+        }
+        function foo2() {
+            foo1.call(this); //1.构造函数继承
+            this.sex = 'male'
+        }
+        function foo3() {
+            this.size = 'max'
+        }
+        function foo4() {
+            foo1.call(this); //1.原型链继承 + 构造函数继承:构造函数继承
+            this.color = 'white'
+        }
+        foo3.prototype = new foo1(); //1.原型链继承
+        foo4.prototype = new foo1(); //2.原型链继承 + 构造函数继承:原型链继承
+        
+
+        var test1 = new foo1()
+
+        var test2 = new foo2() //2.构造函数继承
+       
+        var test3 = new foo3()//2.原型链继承
+
+        var test4 = new foo4()//3.原型链继承 + 构造函数继承
+
+        //原型链继承的测试
+        console.log('test3 instanceof foo3: ', test3 instanceof foo3); //true
+        console.log('test3.__proto__ === foo3.prototype: ', test3.__proto__ === foo3.prototype); //true
+        console.log('test3.constructor===foo3.prototype：',test3.constructor === test3.__proto__.constructor);//true
+
+        //???
+        console.log('foo3.prototype.constructor: ', foo3.prototype.constructor); //foo1 而不是 foo3? 因为foo3也是foo1的实例？//唯一的解释是，他会找到最顶层的？
+        console.log('test3.__proto__.constructor: ', test3.__proto__.constructor); //foo1 而不是 foo3?因为foo3也是foo1的实例？
+
+        console.log('test3.__proto__: ', test3.__proto__)//foo1
+    </script>
+</body>
+
+</html>

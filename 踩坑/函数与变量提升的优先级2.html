@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数与变量提升的优先级</title>
+</head>
+<body>
+    <script>
+        var name=12;
+        function name(){
+            console.log(1);
+        } 
+        
+        console.log(typeof name);//number
+
+        //总结就是 看我那个函数与变量提升优先级的博客
+    </script>
+</body>
+</html>

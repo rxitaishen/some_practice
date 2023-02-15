@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bubble</title>
+    <style>
+        button{
+            background: red;
+            color:white;
+        }
+        #third{
+            width: 50px;
+            height: 50px;
+            border:thin solid red;
+        }
+        #second{
+            width: 100px;
+            height: 100px;
+            border:thin solid red;
+        }
+        #first{
+            width:200px;
+            height: 200px;
+            border:thin solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="first">
+        <div id="second" >
+            <div id="third" >
+                <button id="button">事件冒泡</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        /*
+        大家可以看到这个例子我只是把addEventListener()方法的第三个参数由前面例子的false修改为了true,
+        也就是使用捕获方式获得button，那么结果如下
+        */
+
+        document.getElementById("button").addEventListener("click",function(){
+            alert("button");
+        },true);
+
+        document.getElementById("third").addEventListener("click",function(){
+            alert("third");
+        },true);
+
+        document.getElementById("second").addEventListener("click",function(){
+            alert("second");
+
+            // event.stopPropagation()  虽然stopPropagation()方法既可以阻止事件冒泡，也可以阻止事件捕获，也可以阻止处于目标阶段
+
+            event.stopImmediatePropagation();   //DOM3级新增事件stopImmediatePropagation()方法来阻止事件捕获，另外此方法还可以阻止事件冒泡。
+
+        },true);        
+
+        document.getElementById("first").addEventListener("click",function(){
+            alert("first");
+        },true);
+
+    </script>
+</body>
+</html>

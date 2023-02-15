@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function foo() {
+        var a = 2;
+        (function () {
+          console.log("iife", this.a); // 自执行永远指向window
+        })();
+        return function foo2() {
+          console.log(a); //a
+          setTimeout(function () { // 定时器永远指向全局对象，除非回调函数是箭头函数，箭头函数就不会了，
+            console.log('定时器', this.a);
+          }, 1000);
+        };
+      }
+      const obj = { a: 1 };
+      a = 4;
+      foo().call(obj);
+      console.log("外部", a);
+    </script>
+  </body>
+</html>
