@@ -14,6 +14,7 @@ function cloneDeep(obj) {
     }
 }
 
+// 实现new
 function _new(cstr, ...args) {
     let newObj = {};
     newObj.__proto__ = cstr.prototype;
@@ -22,6 +23,7 @@ function _new(cstr, ...args) {
 
 }
 
+// 实现instanceof
 function _instanceof(l, r) {
     let lp = l.__proto__;
     let rp = r.prototype;
@@ -36,6 +38,7 @@ function _instanceof(l, r) {
     }
 }
 
+//实现call
 Function.prototype._call = function (obj = window, ...args) {
     let key = Symbol();
     obj[key] = this;
@@ -44,6 +47,7 @@ Function.prototype._call = function (obj = window, ...args) {
     return res;
 }
 
+//实现apply
 Function.prototype._apply = function (obj = window, args = []) {
     let key = Symbol();
     obj[key] = this;
@@ -52,6 +56,7 @@ Function.prototype._apply = function (obj = window, args = []) {
     return res;
 }
 
+//实现bind
 Function.prototype._bind = function (obj, ...args) {
     let fun = this;
     return function (...newArgs) {
@@ -59,6 +64,7 @@ Function.prototype._bind = function (obj, ...args) {
     }
 }
 
+//测试用
 function waston() {
     console.log(this.name);
 }
