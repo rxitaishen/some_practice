@@ -37,3 +37,24 @@ function createRequest(config) {
 
 }
 
+// chatgpt对于并发请求的限制手写
+const urls = ['url1', 'url2', 'url3', 'url4', 'url5'];
+const maxConcurrency = 3; // 设置最大并发数为3
+
+// 将urls数组按照maxConcurrency分组
+const groups = urls.reduce((acc, url, index) => {
+  const groupIndex = index % maxConcurrency;
+  if (!acc[groupIndex]) {
+    acc[groupIndex] = [];
+  }
+  acc[groupIndex].push(url);
+  return acc;
+}, []);
+
+// 执行每个分组中的请求，并返回结果数组
+const results = await Promise.all(
+  groups.map(group => Promise.all(group.map(url => fetch(url))))
+);
+
+// 将结果数组合并成一个数组
+const combinedResults = results.flat();
