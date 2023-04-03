@@ -7,7 +7,7 @@ function slice(file, piece = 1024 * 1024 * 5) {
       // 根据长度截取每次需要上传的数据
       // File对象继承自Blob对象，因此包含slice方法
       let blob = file.slice(start, end); 
-      chunks.push(blob)
+      chunks.push(blob) // 可以在push里面做手脚，记录一下hash值
   
       start = end;
       end = start + piece;
