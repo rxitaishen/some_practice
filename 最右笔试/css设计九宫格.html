@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    
+
+    <!-- <div>用 flex
+        实现如下两列布局：父元素宽度自适应；两列子元素全部靠右侧，右侧子元素宽度固定（240px），居右；左侧子元素居左，宽度自适应于本身的内容宽度，最大宽度不超过父元素宽度减去右侧元素宽度后的剩余宽度，
+        左侧子元素的右边和右侧子元素的左边相连；
+        两列高度始终保持相同。</div> -->
+
+
+        <div class="container">
+            <div class="left">子元素</div>
+            <div class="right">右侧子元素内容</div>
+          </div>
+          
+    </div>
+
+    <style>
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.left {
+    /* 宽度的百分比不用考虑父元素的 */
+    max-width: calc(100% - 400px);
+    /* max-width: 500px; */
+    height: 100px;
+    background-color:yellow;
+}
+
+.right {
+    width: 240px;
+    height: 100px;
+    background-color: yellowgreen;
+}
+
+    </style>
+</body>
+
+</html>

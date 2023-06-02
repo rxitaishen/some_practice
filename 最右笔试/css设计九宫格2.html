@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        我们都知道当父元素没有指定高度的时候，height设置为百分比值是无效的，题目也没说一定要用height来写啊，写出效果就行，那就用padding就可以，因为padding是相对于父元素宽度的
+        宽度是可以百分比的。就可以了
+    -->
+    <style>
+        .parent {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .child {
+            flex-basis: calc(33.33% - 20px);
+            padding-bottom: 66.67%;
+            margin: 10px;
+            background-color: yellowgreen;
+        }
+
+
+    </style>
+
+    <!-- <div>
+        用 css 实现如下的多列布局（类似九宫格，右下角为空）
+        效果：父元素宽度自适应所在容器宽度，高度由子元素撑开，有不定数量的直接子元素（可以用8个演示），每一行排3 个子元素，子元素之间的水平、垂直间距为 10px
+        ，子元素的宽度自适应父元素的宽度（(父元素宽度 - 10px * 2) / 3），子元素的高度与自身的宽度成正比（比如 2:1 ）。
+    </div> -->
+
+    <div class="parent">
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+      
+
+    
+</body>
+
+</html>

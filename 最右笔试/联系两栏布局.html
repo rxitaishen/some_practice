@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    
+
+    <!-- <div>用 flex
+        实现如下两列布局：父元素宽度自适应；两列子元素全部靠右侧，右侧子元素宽度固定（240px），居右；左侧子元素居左，宽度自适应于本身的内容宽度，最大宽度不超过父元素宽度减去右侧元素宽度后的剩余宽度，
+        左侧子元素的右边和右侧子元素的左边相连；
+        两列高度始终保持相同。</div> -->
+
+
+        <view class="list-box">
+            <view class="item">A</view>
+            <view class="item">B</view>
+            <view class="item">C</view>
+            <view class="item">D</view>
+            <view class="item">E</view>
+            <view class="item-add">F</view>
+        </view>
+        
+          
+    </div>
+
+    <style>
+
+.list-box {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.item {
+	width: 30%;
+	height: 100px;
+    margin: 5px;
+    border: 1px solid;
+    background-color:red;
+}
+.item-add {
+	width: 30%;
+}
+
+
+    </style>
+</body>
+
+</html>
